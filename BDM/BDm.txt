@@ -1,0 +1,22 @@
+create database blood;
+
+use blood;
+
+create table admin(userName varchar(50),password varchar(10));
+
+insert into admin(userName,password) values('hello@gmail.com','12345');
+
+create table hospital(hospitalId int auto_increment primary key,hospitalName varchar(100) unique,city varchar(50),phoneNo varchar(10) unique);
+
+ create table bloodBank(bbNo int auto_increment primary key,bbName varchar(50),city varchar(50),hospitalId int,foreign key(hospitalId)references hospital(hospitalId));
+
+create table bloodBankManager(empId int auto_increment primary key,name varchar(50),phoneNo varchar(10) unique,email varchar(100) unique,contry varchar(50),bbNo int,foreign key(bbNo) references bloodBank(bbNo));
+
+create table receptionist(empId int auto_increment primary key,name varchar(50),phoneNo varchar(10) unique,email varchar(100) unique,contry varchar(50),bbNo int,foreign key(bbNo) references bloodBank(bbNo));
+
+alter table receptionist auto_increment=100;
+
+create table donor(donorId int auto_increment primary key,name varchar(50),age int,city varchar(50),phoneNo varchar(10) unique,sex enum('M','F'));
+
+create table blood(bloodCode int auto_increment primary key,type enum('A','B','AB','O'),cost double,bbNo int,donorId int,foreign key(donorId) references donor(donorId),foreign key(bbNo) references bloodBank(bbNo));
+
